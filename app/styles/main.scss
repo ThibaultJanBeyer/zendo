@@ -1,31 +1,166 @@
 // bower:scss
 // endbower
+/*-----------------------------------------------------------------
 
-body {
-  background: #fafafa;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #333;
+[Master Stylesheet]
+
+Project:	zendo
+Version:	0.0.1
+Last change:	15/12/04 [general-style]
+
+* Copyright (c) 2015, Thibault Jan Beyer
+* Website: http://www.thibaultjanbeyer.com/
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+[Table of contents]
+
+1. General
+	1.1. Html & Body & #main
+
+
+------------------------------------------------------------------
+
+[Color codes]
+
+Green	    CMYK	46% 2% 88% 0%
+				  RGB		rgba(148,197,82,1);
+				  HEX		#94C552;
+          */$green: #94C552;/*
+
+Red 		  CMYK	0% 99% 97% 0%
+				  RGB		rgba(237,28,36,1)
+				  HEX		#ED1C24
+          */$red: #ED1C24;/*
+
+Whites:		CMYK	4% 3% 3% 0%
+				  RGB		242,242,242
+				  HEX		#f2f2f2
+          */$white: #f2f2f2;/*
+          
+Blacks:   HEX   #333
+          */$black: #333;/*
+
+------------------------------------------------------------------
+
+[Typography]
+
+/* FONTFACE */
+
+@font-face{
+    font-family: 'Fira Sans';
+    src: url('eot/FiraSans-Light.eot');
+    src: local('Fira Sans Light'),
+         url('eot/FiraSans-Light.eot') format('embedded-opentype'),
+         url('woff2/FiraSans-Light.woff2') format('woff2'),
+         url('woff/FiraSans-Light.woff') format('woff'),
+         url('ttf/FiraSans-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
 }
 
-.hero-unit {
-  margin: 50px auto 0 auto;
-  width: 300px;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
-  h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
+@font-face{
+    font-family: 'Fira Sans';
+    src: url('eot/FiraSans-LightItalic.eot');
+    src: local('Fira Sans Light Italic'),
+         url('eot/FiraSans-LightItalic.eot') format('embedded-opentype'),
+         url('woff2/FiraSans-LightItalic.woff2') format('woff2'),
+         url('woff/FiraSans-LightItalic.woff') format('woff'),
+         url('ttf/FiraSans-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face{
+    font-family: 'Fira Sans';
+    src: url('/fonts/fira/eot/FiraSans-Regular.eot');
+    src: local('Fira Sans Regular'),
+         url('/fonts/fira/eot/FiraSans-Regular.eot') format('embedded-opentype'),
+         url('/fonts/fira/woff2/FiraSans-Regular.woff2') format('woff2'),
+         url('/fonts/fira/woff/FiraSans-Regular.woff') format('woff'),
+         url('/fonts/fira/ttf/FiraSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Fira Sans';
+    src: url('/fonts/fira/eot/FiraSans-Italic.eot');
+    src: local('Fira Sans Regular Italic'),
+         url('/fonts/fira/eot/FiraSans-Italic.eot') format('embedded-opentype'),
+         url('/fonts/fira/woff2/FiraSans-Italic.woff2') format('woff2'),
+         url('/fonts/fira/woff/FiraSans-Italic.woff') format('woff'),
+         url('/fonts/fira/ttf/FiraSans-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face{
+    font-family: 'Fira Sans';
+    src: url('/fonts/fira/eot/FiraSans-Bold.eot');
+    src: local('Fira Sans Bold'),
+         url('/fonts/fira/eot/FiraSans-Bold.eot') format('embedded-opentype'),
+         url('/fonts/fira/woff2/FiraSans-Bold.woff2') format('woff2'),
+         url('/fonts/fira/woff/FiraSans-Bold.woff') format('woff'),
+         url('/fonts/fira/ttf/FiraSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Fira Sans';
+    src: url('/fonts/fira/eot/FiraSans-BoldItalic.eot');
+    src: local('Fira Sans Bold Italic'),
+         url('/fonts/fira/eot/FiraSans-BoldItalic.eot') format('embedded-opentype'),
+         url('/fonts/fira/woff2/FiraSans-BoldItalic.woff2') format('woff2'),
+         url('/fonts/fira/woff/FiraSans-BoldItalic.woff') format('woff'),
+         url('/fonts/fira/ttf/FiraSans-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* KERNING */
+html, body {
+  color: #333;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: .1px;
+	text-rendering: optimizeLegibility;
+	font-variant-ligatures: common-ligatures;
+	-webkit-font-variant-ligatures: common-ligatures;
+	-moz-font-feature-settings: "kern=1"; /* pre-Firefox 14+ */
+	-webkit-font-feature-settings: "kern";
+	-moz-font-feature-settings: "kern"; /* Firefox 14+ */
+	font-feature-settings: "liga", "kern"; /* standard */
+	font-kerning: normal; /* Safari 7+, Firefox 24+, Chrome 33(?)+, Opera 21+*/
+}
+
+/* Font-Size */
+@function calculateRem($size) {
+  $remSize: $size / 16px;
+  @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+  font-size: $size;
+  font-size: calculateRem($size);
+}
+
+/*
+------------------------------------------------------------------
+------------------------------------------------------------------
+					1. General
+------------------------------------------------------------------
+ 
+ 	--- 1.1. Html & Body & #main --- */
+
+body,html {
+	font-family: 'Fira Sans',"Helvetica Neue", Helvetica, Arial, sans-serif; 
+  font-weight: 400;
 }
 
 .browsehappy {
   margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+  border:1px solid red;
+  background: white;
+  padding: 0.2em 0.5em;
 }
