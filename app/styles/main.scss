@@ -5,8 +5,8 @@
 [Master Stylesheet]
 
 Project:	zendo
-Version:	0.0.2
-Last change:	15/12/04 [general-style]
+Version:	0.0.3
+Last change:	15/12/04 [section-incomplete add]
 
 * Copyright (c) 2015, Thibault Jan Beyer
 * Website: http://www.thibaultjanbeyer.com/
@@ -17,7 +17,9 @@ Last change:	15/12/04 [general-style]
 
 1. General
 	1.1. Html & Body & #main
+  1.2. Input
 2. Header
+3. Section Incomplete
 
 
 ------------------------------------------------------------------
@@ -158,13 +160,13 @@ html, body {
 
 /* BREAKPOINTS */
 @mixin bp-large {
-  @media only screen and (min-width: 60em) {
+  @media only screen and (min-width: 70em) {
     @content;
   }
 }
 
 @mixin bp-medium {
-  @media only screen and (min-width: 40em) {
+  @media only screen and (min-width: 40em) and (max-width: 70em) {
     @content;
   }
 }
@@ -185,7 +187,7 @@ body,html {
 }
 
 #everything{
-  max-width: 100em;
+  max-width: 90em;
   margin: auto;
   padding: 16px;
   padding: calculateRem(16px);
@@ -198,28 +200,42 @@ body,html {
   padding: 0.2em 0.5em;
 }
 
+/* 	--- 1.2. input --- */
+
+  input{
+    border:0;
+    border-bottom: 1px solid $black;
+  }
+
 /*
 ------------------------------------------------------------------
 ------------------------------------------------------------------
 					2. Header
 ------------------------------------------------------------------
- 
- 	--- 2.1. Header --- */
+*/
 
 header{
   @include bp-medium {
-    width: 50%;
+    width: 500px;
   }
+  width:90%;
   nav ul{
     list-style: none;
-    display: flex;
-    justify-content: space-around;
     padding-left: 0;
     @include bp-medium {
-      padding: 0 64px;
-      padding: 0 calculateRem(64px);
+      padding: 0 30px;
+      padding: 0 calculateRem(30px);
+      display: inline-block;
     }
-    li{ 
+    @include bp-large {
+      padding: 0 80px;
+      padding: 0 calculateRem(80px);
+      display: inline-block;
+    }
+    li{
+      display: inline-block;
+      padding: 0 12px 0 0;
+      padding: 0 calculateRem(12px) 0 0;
       a{
         text-transform: uppercase;
         opacity: 0.35;
@@ -229,24 +245,77 @@ header{
           opacity: 1;
         }
       }
-      &.music svg{
-          @include width(25px);
-          .mute,.play,.playLoud{ //Hide all lines 
-            opacity: 0;
-          } 
-          &.muteClick .mute,&.playClick .play,&.playLoudClick .playLoud{ //show respective lines
-            opacity: 1;
-          }
+      &.music{
+        @include bp-medium {
+          vertical-align: top;
+        }
+        svg{
+            @include width(25px);
+            .mute,.play,.playLoud{ //Hide all lines 
+              opacity: 0;
+            } 
+            &.muteClick .mute,&.playClick .play,&.playLoudClick .playLoud{ //show respective lines
+              opacity: 1;
+            }
+        }
       }
-      &:first-child:after{
-        content: ' ⍌';
+      &:last-child{
+        padding-right: 0;
       }
-      &:first-child:hover:after{
-        content:' ⍓';
-      }
-      &:first-child:focus:after{
-        content:' ⍓';
+      &:first-child{
+        padding-right: 10px;
+        padding-right: calculateRem(10px);
+        &:after{
+          content: ' ⍌';
+        }
+        &:hover:after,&:first-child:focus:after{
+          content:' ⍓';
+        }
       }
     }
   }
+}
+
+/*
+------------------------------------------------------------------
+------------------------------------------------------------------
+					3. Section Incomplete
+------------------------------------------------------------------
+*/
+
+#incompleted{
+ width: 90%;
+ .inside{
+   @include bp-large {
+      padding: 0 80px;
+      padding: 0 calculateRem(80px);
+    }
+    @include bp-medium {
+      padding: 0 30px;
+      padding: 0 calculateRem(30px);
+    }
+ }
+}
+
+
+/*
+------------------------------------------------------------------
+------------------------------------------------------------------
+					3. Section Complete
+------------------------------------------------------------------
+*/
+
+#completed{
+ width: 90%;
+ background: #000;
+ .inside{
+   @include bp-large {
+      padding: 0 80px;
+      padding: 0 calculateRem(80px);
+    }
+    @include bp-medium {
+      padding: 0 30px;
+      padding: 0 calculateRem(30px);
+    }
+ }
 }

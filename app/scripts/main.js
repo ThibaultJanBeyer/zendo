@@ -32,7 +32,7 @@ Last change:	15/12/04 [toggleclick]
 var classes = ['muteClick', 'playClick', 'playLoudClick'],
     currentClass = 0;
 
-$('.music .button').click(function () {
+$('.music').click(function () {
     $('svg').attr("class", "");
     if (currentClass + 1 < classes.length){
         currentClass += 1;
@@ -40,4 +40,17 @@ $('.music .button').click(function () {
         currentClass = 0;
     }
     $('svg').attr("class", classes[currentClass]);
+});
+
+$('.music').keydown(function (e) {
+    if (e.keyCode == 32) {
+        e.preventDefault();
+        $('svg').attr("class", "");
+        if (currentClass + 1 < classes.length){
+            currentClass += 1;
+        }else{
+            currentClass = 0;
+        }
+        $('svg').attr("class", classes[currentClass]); 
+    }
 });
