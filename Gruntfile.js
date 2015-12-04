@@ -375,9 +375,6 @@ module.exports = function (grunt) {
       ]
     }
   });
-  
-  // CSS Prefix
-  grunt.loadNpmTasks('grunt-css-prefix');
 
   grunt.registerTask('serve', 'start the server and preview your app', function (target) {
 

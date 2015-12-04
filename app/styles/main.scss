@@ -5,7 +5,7 @@
 [Master Stylesheet]
 
 Project:	zendo
-Version:	0.0.1
+Version:	0.0.2
 Last change:	15/12/04 [general-style]
 
 * Copyright (c) 2015, Thibault Jan Beyer
@@ -17,6 +17,7 @@ Last change:	15/12/04 [general-style]
 
 1. General
 	1.1. Html & Body & #main
+2. Header
 
 
 ------------------------------------------------------------------
@@ -134,7 +135,12 @@ html, body {
 	font-kerning: normal; /* Safari 7+, Firefox 24+, Chrome 33(?)+, Opera 21+*/
 }
 
-/* Font-Size */
+/*
+------------------------------------------------------------------
+
+[SASS]
+
+/* FONT-SIZE */
 @function calculateRem($size) {
   $remSize: $size / 16px;
   @return $remSize * 1rem;
@@ -143,6 +149,24 @@ html, body {
 @mixin font-size($size) {
   font-size: $size;
   font-size: calculateRem($size);
+}
+
+@mixin width($size) {
+  width: $size;
+  width: calculateRem($size);
+}
+
+/* BREAKPOINTS */
+@mixin bp-large {
+  @media only screen and (min-width: 60em) {
+    @content;
+  }
+}
+
+@mixin bp-medium {
+  @media only screen and (min-width: 40em) {
+    @content;
+  }
 }
 
 /*
@@ -156,6 +180,15 @@ html, body {
 body,html {
 	font-family: 'Fira Sans',"Helvetica Neue", Helvetica, Arial, sans-serif; 
   font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+
+#everything{
+  max-width: 100em;
+  margin: auto;
+  padding: 16px;
+  padding: calculateRem(16px);
 }
 
 .browsehappy {
@@ -163,4 +196,57 @@ body,html {
   border:1px solid red;
   background: white;
   padding: 0.2em 0.5em;
+}
+
+/*
+------------------------------------------------------------------
+------------------------------------------------------------------
+					2. Header
+------------------------------------------------------------------
+ 
+ 	--- 2.1. Header --- */
+
+header{
+  @include bp-medium {
+    width: 50%;
+  }
+  nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding-left: 0;
+    @include bp-medium {
+      padding: 0 64px;
+      padding: 0 calculateRem(64px);
+    }
+    li{ 
+      a{
+        text-transform: uppercase;
+        opacity: 0.35;
+        color: $black;
+        text-decoration: overline;
+        &:hover{
+          opacity: 1;
+        }
+      }
+      &.music svg{
+          @include width(25px);
+          .mute,.play,.playLoud{ //Hide all lines 
+            opacity: 0;
+          } 
+          &.muteClick .mute,&.playClick .play,&.playLoudClick .playLoud{ //show respective lines
+            opacity: 1;
+          }
+      }
+      &:first-child:after{
+        content: ' ⍌';
+      }
+      &:first-child:hover:after{
+        content:' ⍓';
+      }
+      &:first-child:focus:after{
+        content:' ⍓';
+      }
+    }
+  }
 }
