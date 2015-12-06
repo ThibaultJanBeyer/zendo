@@ -23,12 +23,14 @@ Last change:	15/12/04 [toggleclick]
 ------------------------------------------------------------------
 					Startups
 ------------------------------------------------------------------
-
+*/
+(function($){
+/*
 ------------------------------------------------------------------
 					1. Toggle SVG Audio Class
 ------------------------------------------------------------------
 */
-
+/*
 var classes = ['muteClick', 'playClick', 'playLoudClick'],
     currentClass = 0;
 
@@ -54,3 +56,10 @@ $('.music').keydown(function (e) {
         $('svg').attr("class", classes[currentClass]); 
     }
 });
+*/
+
+$('.music').click(function(){
+    $('svg').toggleClasses(['muteClick', 'playClick', 'playLoudClick']);
+});
+
+})(jQuery);
