@@ -3,8 +3,8 @@
 [Master Script]
 
 Project:	zendo
-Version:	0.0.2
-Last change:	15/12/04 [toggleclick]
+Version:	0.0.5
+Last change:	15/12/13 [inputs]
 
 * Copyright (c) 2015, Thibault Jan Beyer
 * Website: http://www.thibaultjanbeyer.com/
@@ -14,7 +14,8 @@ Last change:	15/12/04 [toggleclick]
 [Table of contents]
 
 1. Toggle SVG Audio Class
-
+2. Slide right side in & out
+3. Input
 
 ------------------------------------------------------------------
 	Small Plugins
@@ -30,36 +31,60 @@ Last change:	15/12/04 [toggleclick]
 					1. Toggle SVG Audio Class
 ------------------------------------------------------------------
 */
-/*
-var classes = ['muteClick', 'playClick', 'playLoudClick'],
-    currentClass = 0;
-
-$('.music').click(function () {
-    $('svg').attr("class", "");
-    if (currentClass + 1 < classes.length){
-        currentClass += 1;
-    }else{
-        currentClass = 0;
-    }
-    $('svg').attr("class", classes[currentClass]);
-});
-
-$('.music').keydown(function (e) {
-    if (e.keyCode == 32) {
-        e.preventDefault();
-        $('svg').attr("class", "");
-        if (currentClass + 1 < classes.length){
-            currentClass += 1;
-        }else{
-            currentClass = 0;
-        }
-        $('svg').attr("class", classes[currentClass]); 
-    }
-});
-*/
 
 $('.music').click(function(){
-    $('svg').toggleClasses(['muteClick', 'playClick', 'playLoudClick']);
+    $('.music svg').toggleClasses(['muteClick', 'playClick', 'playLoudClick']);
 });
 
+/*
+------------------------------------------------------------------
+					2. Slide right side in & out
+------------------------------------------------------------------
+*/
+
+$('#completed').click(function(){
+	$('#everything').addClass('right');
+});
+
+$('#incompleted').click(function() {
+	$('#everything').removeClass('right');
+});
+
+/*
+------------------------------------------------------------------
+					3. Input
+------------------------------------------------------------------
+*/
+
+/* Focus */
+$('input').on('focus', function(){ 
+	$('.inputHolder').removeClass('focus');
+	$(this).parent().addClass('focus');
+});
+
+$('input').on('focusout', function(){ 
+	$('.inputHolder').removeClass('focus');
+	$('.inputHolder.task').addClass('focus');
+	$('input').each(function(){
+		var $this = $(this);
+		if ($this.val().length !== 0){
+			$this.parent().addClass('complete');
+		} else {
+			$this.parent().removeClass('complete');
+		}
+	});
+});
+
+$('input').on('keypress', function(e){
+	var $this = $(this);
+	if( $this.attr('type') == "search" && e.keyCode !== 9 && e.keyCode !== 8 && e.keyCode !== 13 ){
+		$('.iTask').addClass('hide');
+	}
+});
+
+/*
+------------------------------------------------------------------
+					END
+------------------------------------------------------------------
+*/
 })(jQuery);

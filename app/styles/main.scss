@@ -5,8 +5,8 @@
 [Master Stylesheet]
 
 Project:	zendo
-Version:	0.0.3
-Last change:	15/12/04 [section-incomplete add]
+Version:	0.0.5
+Last change:	15/12/13 [section incomplete CREATION]
 
 * Copyright (c) 2015, Thibault Jan Beyer
 * Website: http://www.thibaultjanbeyer.com/
@@ -19,7 +19,16 @@ Last change:	15/12/04 [section-incomplete add]
 	1.1. Html & Body & #main
   1.2. Input
 2. Header
-3. Section Incomplete
+  General
+  2.1. Header on Big Screen
+  2.2. Header when right side is active
+3. Section Incompleted
+  General
+  3.1. Creation
+  3.2. section on big screen
+4. Section Completed
+  General
+  4.1. section on big screen
 
 
 ------------------------------------------------------------------
@@ -171,19 +180,51 @@ html, body {
   }
 }
 
+/* CALCULATIONS */
+
+@function calculateAminB($sizeA,$sizeB) {
+  $Size: $sizeA - $sizeB;
+  @return $Size;
+}
+
+/* TRANSITION */
+
+@mixin transitionXL{
+  transition: all 2s ease;
+}
+@mixin transitionL{
+  transition: all 1s ease;
+}
+@mixin transitionS{
+  transition: all 0.5s ease;
+}
+@mixin transitionXS{
+  transition: all 0.2s ease;
+}
+
+/* HIDING */
+.hide{
+  opacity: 0 !important;
+  pointer-events: none !important;
+  @include transitionXL;
+}
+
 /*
 ------------------------------------------------------------------
 ------------------------------------------------------------------
 					1. General
 ------------------------------------------------------------------
- 
- 	--- 1.1. Html & Body & #main --- */
+*/
+/* --------------------------------- 
+ 	  --- 1.1. Html & Body & #main ---
+   --------------------------------- */
 
 body,html {
 	font-family: 'Fira Sans',"Helvetica Neue", Helvetica, Arial, sans-serif; 
   font-weight: 400;
   margin: 0;
   padding: 0;
+  background: $white;
 }
 
 #everything{
@@ -199,12 +240,75 @@ body,html {
   background: white;
   padding: 0.2em 0.5em;
 }
-
-/* 	--- 1.2. input --- */
+/* -------------------- 
+ 	  --- 1.2. input ---
+   -------------------- */
 
   input{
     border:0;
+    background: none;
+  }
+  .inputHolder{
     border-bottom: 1px solid $black;
+    margin: 0 2px;
+    @include transitionL;
+    &.complete{
+      border-bottom: 1px solid $green;
+      @include transitionL;
+    }
+    input{
+      @include transitionL;
+      width:20px;
+    }
+    &.focus input{
+        @include transitionL;
+        width: 150px;
+        // calculateAminB(100%,70px)
+      }
+    &.focus .icon{
+      width: 10px;
+      font-size: 0.5em;
+      @include transitionL;
+      opacity: 1;
+      background: none;
+    }
+    .icon{
+      @include transitionL;
+      font-size: 0.5em;
+      width: 20px;
+      padding: 0 8px;
+      position: absolute;
+      margin-left:-5px;
+      pointer-events: none;
+      background: $white;
+      g{
+        opacity: 0.35;
+      }
+    }
+    .iTask{
+      opacity:0;
+      width:100% !important;
+    }
+    .iAssign{
+      margin-top: -2px;
+    }
+    &.add:focus{
+      outline-color: $green;
+      border-color: $green;
+      svg{
+        opacity: 1;
+      }
+    }
+  }
+  .add svg{
+    @include transitionL;
+    width: 22px;
+    padding-bottom: 5px;
+    vertical-align: bottom;
+    opacity: 0.35;
+    &:hover{
+      opacity: 1;
+    }
   }
 
 /*
@@ -215,10 +319,9 @@ body,html {
 */
 
 header{
-  @include bp-medium {
-    width: 500px;
-  }
+  @include transitionL;
   width:90%;
+  margin-bottom: 60px;
   nav ul{
     list-style: none;
     padding-left: 0;
@@ -237,13 +340,18 @@ header{
       padding: 0 12px 0 0;
       padding: 0 calculateRem(12px) 0 0;
       a{
+        @include transitionL;
         text-transform: uppercase;
         opacity: 0.35;
         color: $black;
         text-decoration: overline;
         &:hover{
-          opacity: 1;
+          opacity: 1 !important;
         }
+      }
+      path,polygon{
+        @include transitionL;
+        fill: $black;
       }
       &.music{
         @include bp-medium {
@@ -274,6 +382,40 @@ header{
       }
     }
   }
+  /* ----------------------------------
+ 	    --- 2.1. Header on big screen ---
+     ---------------------------------- */
+  @include bp-medium {
+    width: 500px;
+  }
+  
+  @include bp-large {
+        position: sticky;
+  }
+}
+/* ----------------------------------------------
+ 	  --- 2.2. Header when Right side is active ---
+   ---------------------------------------------- */
+.right header{
+  @include transitionL;
+  position: sticky;
+  margin-left: 25px;
+  z-index: 99;
+  color: $white;
+  nav ul li{
+    a{
+      @include transitionL;
+      color: $white;
+      opacity: 0.55;
+      &hover{
+        opacity: 1;
+      }
+    }
+    path,polygon{
+      @include transitionL;
+      fill: $white;
+    }
+  }
 }
 
 /*
@@ -294,6 +436,17 @@ header{
       padding: 0 30px;
       padding: 0 calculateRem(30px);
     }
+    .creation{
+      margin: 50px 0;
+    }
+ }
+ /* -----------------------------------
+ 	   --- 3.2. Section on big screen ---
+    ----------------------------------- */
+ @include bp-large {
+      width: 55%;
+      display: inline-block;
+      vertical-align: top;
  }
 }
 
@@ -301,13 +454,26 @@ header{
 /*
 ------------------------------------------------------------------
 ------------------------------------------------------------------
-					3. Section Complete
+					4. Section Complete
 ------------------------------------------------------------------
 */
 
+.right #completed{
+  left:25px;
+  @include transitionL;
+  @include bp-medium {
+      left:55px;
+  }
+}
+
 #completed{
  width: 90%;
- background: #000;
+ background: $green;
+ position: fixed;
+ top: 0;
+ left:95%;
+ padding: 75px 15px 0 15px;
+ @include transitionL;
  .inside{
    @include bp-large {
       padding: 0 80px;
@@ -317,5 +483,14 @@ header{
       padding: 0 30px;
       padding: 0 calculateRem(30px);
     }
+ }
+ /* -----------------------------------
+ 	   --- 4.1. Section on big screen ---
+    ----------------------------------- */
+ @include bp-large {
+      width: 35%;
+      position: initial;
+      display: inline-block;
+      vertical-align: top;
  }
 }
