@@ -1,3 +1,7 @@
+
+# Discontinued
+### This projects development has stopped. It is no longer maintained.
+
 # zendo
 
 	* VERSION: 0.0.0
