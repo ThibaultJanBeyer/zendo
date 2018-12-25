@@ -17,6 +17,6 @@ Progress
 
 Layout:
 
-![carousel-slider.js logo](http://kit.thibaultjanbeyer.com/tools/zendo/layout_v2.png)
+![carousel-slider.js logo](layout_v2.png)
 
 Mobile first approach..
